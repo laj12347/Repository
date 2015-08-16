@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sishu.customerManager.dao.CustomerDAO">
+
+	<insert id="create" parameterType="com.sishu.customerManager.vo.CustomerModel">
+		insert into tb1_customer( pwd, customerId ,showName ,trueName, registerTime) 
+		values ( #{pwd}, #{customerId} ,#{showName} ,#{trueName}, #{registerTime})
+	</insert>
+
+	<update id="update" parameterType="com.sishu.customerManager.vo.CustomerModel">
+		update tb1_customer set pwd=#{pwd}, customerId=#{customerId} ,showName=#{showName}  
+		,trueName=#{trueName}, registerTime #{registerTime}
+		 where uuid=#{uuid}
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		delete  from tb1_customer where uuid=#{uuid}
+	</delete>
+
+	<select id="getByUuid" parameterType="Integer" resultType="com.sishu.customerManager.dao.CustomerDAO">
+		select * from tb1_customer where uuid=#{uuid}
+	</select>
+	
+	<select id="getByConditionPage" parameterType="com.sishu.customerManager.vo.CustomerQueryModel" resultType="com.sishu.customerManager.vo.CustomerModel">
+		select * from tb1_customer 
+		<where>
+			<if test="uuid!=null &amp;&amp; uuid>0">
+				and uuid=#{uuid}
+			</if>
+			<if test="customerId!=null">
+				and customerId=#{customerId}
+			</if>
+			<if test="showName!=null ">
+				and showName=#{showName}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,1 @@
+alert("this is goods project a.js ")

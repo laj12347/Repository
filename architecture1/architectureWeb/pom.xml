@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sishu</groupId>
+		<artifactId>architecture1</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.sishu</groupId>
+	<artifactId>architectureWeb</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>architectureWeb Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>com.sishu</groupId>
+			<artifactId>customerManager</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.sishu</groupId>
+			<artifactId>goodsWeb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.sishu</groupId>
+			<artifactId>cartManager</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.sishu</groupId>
+			<artifactId>orderManager</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.sishu</groupId>
+			<artifactId>storemanager</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>architectureWeb</finalName>
+		<plugins>
+			<plugin>
+				<!-- 查看最后生成的war包，应该是合并的内容 -->
+				<!-- 注意：多个war有相同路径且同名文件，如果总的web里面有，那么总的这个文件会覆盖分支的， -->
+				<!-- 如果总的没有，那么根绝合并的顺序，保留第一个同名文件。 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<overlays>
+						<overlay>
+							<groupId>com.sishu</groupId>
+							<artifactId>customerManager</artifactId>
+						</overlay>
+						<overlay>
+							<groupId>com.sishu</groupId>
+							<artifactId>goodsWeb</artifactId>
+						</overlay>
+						<overlay>
+							<groupId>com.sishu</groupId>
+							<artifactId>cartManager</artifactId>
+						</overlay>
+						<overlay>
+							<groupId>com.sishu</groupId>
+							<artifactId>orderManager</artifactId>
+						</overlay>
+						<overlay>
+							<groupId>com.sishu</groupId>
+							<artifactId>storemanager</artifactId>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+			<!-- jetty插件 -->
+			<!-- jetty插件 run configuration中goals中添加参数jetty:run -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.5</version>
+				<configuration>
+					<webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
+					<scanIntervalSeconds>30</scanIntervalSeconds>
+					<stopPort>9999</stopPort>
+					<contextPath>/architectureWeb</contextPath>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8080</port>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

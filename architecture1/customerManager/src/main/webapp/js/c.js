@@ -1,0 +1,1 @@
+alert("this is customer project c.js ")
